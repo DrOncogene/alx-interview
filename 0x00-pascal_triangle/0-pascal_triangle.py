@@ -13,6 +13,7 @@ def pascal_triangle(n: int):
         return [[1]]
     if n == 2:
         return [[1], [1, 1]]
+
     triangle = [[1], [1, 1]]
     for num in range(3, n + 1):
         last_row = triangle[-1]
