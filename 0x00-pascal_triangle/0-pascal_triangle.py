@@ -3,6 +3,7 @@
 implementation of Pascal's triangle
 """
 
+
 def pascal_triangle(n: int):
     """
     creates a list of lists that
