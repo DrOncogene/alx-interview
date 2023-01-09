@@ -16,11 +16,12 @@ def canUnlockAll(boxes):
         return True
 
     current_box = boxes[0]
-    opened = open_box(0, current_box, boxes, [0])
+    opened = open_box(0, current_box, boxes, {0})
+
     return len(opened) == len(boxes)
 
 
-def open_box(idx, current, boxes, opened):
+def open_box(idx, current, boxes, opened: set):
     """
     recursively open each box with keys
     found in the opened ones
@@ -33,17 +34,23 @@ def open_box(idx, current, boxes, opened):
     :return list of opened boxes
     """
     size = len(boxes)
+    idxs = set(range(1, size + 1))
     if len(opened) == size:
         return opened
 
-    current = boxes[idx]
+    current = set(boxes[idx])
+    if current == idxs:
+        return current
+
     if len(current) == 0 and len(opened) < size:
         return opened
 
     for _, val in enumerate(current):
+        if len(opened) == size:
+            return opened
         if not val or val in opened or val >= size:
             continue
-        opened.append(val)
+        opened.add(val)
         opened = open_box(val, current, boxes, opened)
 
     return opened
