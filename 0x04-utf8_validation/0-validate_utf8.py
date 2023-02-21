@@ -10,12 +10,16 @@ def binary(num):
     returns the complete binary repr
     of an integer padded when necessary
     """
+    # get the binary str and discard the first 2 chars
     res = bin(num)[2:]
-    rem = len(res) % 4
+
+    rem = len(res) % 8
     if rem == 0:
         return res
-
-    diff = abs(rem - 4)
+    # find the remaining length to complete multiple of 8
+    # 1 byte = 8 bit
+    diff = abs(rem - 8)
+    # return it prefixed with the right num of zeroes
     return f"{'0' * diff}{res}"
 
 
