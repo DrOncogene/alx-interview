@@ -1,6 +1,5 @@
 #!/usr/bin/python3
-"""
-validate utf-8 encoding
+"""validate utf-8 encoding
 """
 import re
 
