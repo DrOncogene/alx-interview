@@ -17,7 +17,7 @@ request.get(URL, async (err, res) => {
 });
 
 async function printCharacters (characters) {
-  let charList = [];
+  const charList = [];
 
   for (const charUri of characters) {
     await get(charUri).then(res => {
