@@ -11,7 +11,7 @@ def makeChange(coins, total):
         return 0
 
     return make_change(coins, total, 0)
-    
+
 
 def make_change(coins, total, n_coins):
     """
