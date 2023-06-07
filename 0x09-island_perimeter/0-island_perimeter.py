@@ -15,12 +15,12 @@ def island_perimeter(grid):
     for i, row in enumerate(grid):
         for j, val in enumerate(row):
             if val == 1:
-                perimeter += water_neighbors(grid, (i, j))
+                perimeter += edges(grid, (i, j))
 
     return perimeter
 
 
-def water_neighbors(grid, cell):
+def edges(grid, cell):
     """
     finds the apropriate perimeter of each cell by
     checking for water cells or edges and adding 1 to
