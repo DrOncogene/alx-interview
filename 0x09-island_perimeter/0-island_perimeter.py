@@ -2,45 +2,39 @@
 """
 calculating the perimeter of an island
 """
+import itertools
 
 
-def island_perimeter(grid):
+def island_perimeter(grid: list[list[int]]):
     """finds the perimeter of an island
     represented by a grid (list of list)
 
     :param grid: list of list of 0s and 1s
     """
 
-    size = 0
-    for row in grid:
-        size = longest_stretch(row, size)
+    perimeter = 0
+    for i, row in enumerate(grid):
+        for j, val in enumerate(row):
+            if val == 1:
+                perimeter += water_neighbors(grid, (i, j))
 
-    for col in zip(*grid):
-        size = longest_stretch(col, size)
-
-    return size * 4
+    return perimeter
 
 
-def longest_stretch(row, size):
+def water_neighbors(grid, pos):
     """
-    finds the longest stretch of 1s from a list
-    and compare it to longest from other lists in the grid
-
-    :param row: list of 0s and 1s
-    :param size: longest stretch from preceeding lists
     """
+    i, j = pos
+    dim = len(grid), len(grid[0])
+    neighbors = 0
 
-    stretches = []
-    longest = 0
-    for num in row:
-        if num == 1:
-            longest += 1
-        elif num == 0 and longest > 0:
-            stretches.append(longest)
-            longest = 0
+    if i == 0 or grid[i - 1][j] == 0:
+        neighbors += 1
+    if i == dim[0] - 1 or grid[i + 1][j] == 0:
+        neighbors += 1
+    if j == 0 or grid[i][j - 1] == 0:
+        neighbors += 1
+    if j == dim[1] - 1 or grid[i][j + 1] == 0:
+        neighbors += 1
 
-    if len(stretches) == 0:
-        return size
-
-    return size if max(stretches) < size else max(stretches)
-
+    return neighbors
