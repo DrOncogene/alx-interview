@@ -2,10 +2,9 @@
 """
 calculating the perimeter of an island
 """
-import itertools
 
 
-def island_perimeter(grid: list[list[int]]):
+def island_perimeter(grid):
     """finds the perimeter of an island
     represented by a grid (list of list)
 
@@ -21,10 +20,16 @@ def island_perimeter(grid: list[list[int]]):
     return perimeter
 
 
-def water_neighbors(grid, pos):
+def water_neighbors(grid, cell):
     """
+    finds the apropriate perimeter of each cell by
+    checking for water cells or edges and adding 1 to
+    the perimeter
+
+    :param grid: the grid
+    :param cell: cell coordinates (i, j)
     """
-    i, j = pos
+    i, j = cell
     dim = len(grid), len(grid[0])
     neighbors = 0
 
