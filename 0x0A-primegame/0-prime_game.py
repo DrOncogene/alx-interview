@@ -18,27 +18,30 @@ def isWinner(x, nums):
         else:
             scores['Ben'] += 1
 
-    for i in range(x):
-        round_nums = [j + 1 for j in range(nums[i])]
-        turn = 'm'
-        for idx, num in enumerate(round_nums.copy()):
+    def play_round(turn, round_numbers):
+        for num in round_numbers.copy():
             if num in memoize:
                 update_score(memoize[num])
                 break
 
-            prime = get_prime(round_nums)
+            prime = get_prime(round_numbers)
             if not prime:
                 update_score(turn)
-                memoize[num] = 'm' if turn == 'b' else 'b'
-                print(memoize)
+                memoize[nums[i]] = 'm' if turn == 'b' else 'b'
                 break
 
-            for num2 in round_nums:
+            for num2 in round_numbers:
                 if num2 % prime == 0:
-                    round_nums.pop(idx)
+                    round_nums.remove(num2)
 
             if turn == 'm':
                 turn = 'b'
+
+    for i in range(x):
+        round_nums = [j + 1 for j in range(nums[i])]
+        turn = 'm'
+        play_round(turn, round_nums)
+        
     return ('Maria' if scores['Maria'] > scores['Ben']
             else 'Ben')
 
