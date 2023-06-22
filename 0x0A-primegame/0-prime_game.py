@@ -5,6 +5,9 @@
 def isWinner(x, nums):
     """determins the winner of the game after x rounds
     """
+    if x <= 0:
+        return None
+
     scores = {
         'Maria': 0,
         'Ben': 0
@@ -14,9 +17,9 @@ def isWinner(x, nums):
 
     def update_score(turn):
         if turn == 'm':
-            scores['Maria'] += 1
-        else:
             scores['Ben'] += 1
+        else:
+            scores['Maria'] += 1
 
     def play_round(turn, round_numbers):
         for num in round_numbers.copy():
@@ -41,7 +44,7 @@ def isWinner(x, nums):
         round_nums = [j + 1 for j in range(nums[i])]
         turn = 'm'
         play_round(turn, round_nums)
-        
+
     return ('Maria' if scores['Maria'] > scores['Ben']
             else 'Ben')
 
