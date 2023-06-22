@@ -17,33 +17,36 @@ def isWinner(x, nums):
 
     def update_score(turn):
         if turn == 'm':
-            scores['Ben'] += 1
-        else:
             scores['Maria'] += 1
+        else:
+            scores['Ben'] += 1
 
-    def play_round(turn, round_numbers):
-        for num in round_numbers.copy():
-            if num in memoize:
-                update_score(memoize[num])
-                break
+    def play_round(turn, round_len, round_numbers):
+        if round_len in memoize:
+            update_score(memoize[round_len])
+            return
+
+        prime = get_prime(round_numbers)
+        while prime:
+            round_numbers = [num for num in round_numbers
+                             if num % prime != 0]
+
+            turn = 'm' if turn == 'b' else 'b'
 
             prime = get_prime(round_numbers)
-            if not prime:
-                update_score(turn)
-                memoize[nums[i]] = 'm' if turn == 'b' else 'b'
-                break
 
-            for num2 in round_numbers:
-                if num2 % prime == 0:
-                    round_nums.remove(num2)
-
-            if turn == 'm':
-                turn = 'b'
+        update_score('m' if turn == 'b' else 'b')
+        memoize[round_len] = 'm' if turn == 'b' else 'b'
 
     for i in range(x):
-        round_nums = [j + 1 for j in range(nums[i])]
+        curr_round = nums[i]
+        round_nums = [j + 1 for j in range(curr_round)]
+
         turn = 'm'
-        play_round(turn, round_nums)
+        play_round(turn, nums[i], round_nums)
+
+    if scores['Ben'] == scores['Maria']:
+        return None
 
     return ('Maria' if scores['Maria'] > scores['Ben']
             else 'Ben')
@@ -65,9 +68,11 @@ def is_prime(num):
     """
     if num == 1:
         return False
+    if num in [2, 3, 5, 7]:
+        return True
 
     median = int(num / 2)
-    for i in range(1, median + 1):
+    for i in range(2, median + 1):
         if num % i == 0:
             return False
 
